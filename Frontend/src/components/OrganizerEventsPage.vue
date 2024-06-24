@@ -199,6 +199,7 @@ export default {
     cursor: pointer;
     transition: background-color 0.3s;
     border-radius: 5px;
+    border-radius: 5px;
 }
 
 .see-more-btn:hover {
