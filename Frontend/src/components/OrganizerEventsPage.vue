@@ -8,7 +8,7 @@
             <button class="filter-btn">This Weekend</button>
             <button class="filter-btn">Free</button>
         </div>
-
+        
         <div class="upcoming-events">
             <h2>Upcoming Events</h2>
             <div class="event-cards">
