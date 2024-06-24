@@ -80,6 +80,7 @@
 </template>
 
 
+
 <script>
 import EventCategories from './EventCategories.vue';
 import EventCard from './EventCard.vue';
