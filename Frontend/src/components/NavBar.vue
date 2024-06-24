@@ -1,12 +1,13 @@
 <template>
     <div class='navbar'> 
          <div class='AppLogo'>
-             <img src='../assets/Icons/InviteLogo.jpg' alt='logo'/>
+             <img src='../assets/Icons/InviteLogo.png' alt='logo'/>
+            <p>hello</p>
          </div>
-         asdasdasdadwdas
+        
          <div class='menu'>
              <ul>
-                 <li><router-link to='/' active-class = "active-page">Home     </router-link></li>
+                 <li><router-link to='/' active-class = "active-page">Home</router-link></li>
                  <li><router-link to='/events' active-class = "active-page">Events</router-link></li>
                  <li><router-link to='/invitations' active-class = "active-page">Invitations</router-link></li>
                  <li><router-link to='/map' active-class = "active-page">Map</router-link></li>
