@@ -10,6 +10,7 @@ import SendInvitationPage from '../components/SendInvitationPage.vue';
 import EventListByCategory from '../components/EventlistByCategory.vue';
 import ProfilePage from '../components/ProfilePage.vue';
 
+
 const routes = createRouter({
     history: createWebHistory(),
     routes: [
