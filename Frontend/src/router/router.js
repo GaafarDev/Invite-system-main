@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../components/HomePage.vue';
 import EventsPage from '../components/EventsPage.vue';
 import MapPage from '../components/MapPage.vue';
@@ -7,18 +7,20 @@ import OrganizerEventsPage from '../components/OrganizerEventsPage.vue';
 import CreateEventPage from '../components/CreateEventPage.vue';
 import OrganizerViewEventPage from '../components/OrganizerViewEventPage.vue';
 import SendInvitationPage from '../components/SendInvitationPage.vue';
+import EventListByCategory from '../components/EventlistByCategory.vue';
 
 const routes = createRouter({
     history: createWebHistory(),
-    routes : [
-        {path: '/', component: HomePage},
-        {path: '/events', component: EventsPage}, //the path is the name that show in url
-        {path: '/map',  component: MapPage},
-        {path: '/invitations',  component: InvitationsPage},
-        {path: '/organizer-events',  component: OrganizerEventsPage},
-        {path: '/create-event',  component: CreateEventPage},
-        {path: '/organizer-view-event',  component: OrganizerViewEventPage},
-        {path: '/send-invitation',  component: SendInvitationPage, name: 'SendInvitation'},
+    routes: [
+        { path: '/', component: HomePage, name: 'Home' },
+        { path: '/events', component: EventsPage, name: 'Events' },
+        { path: '/map', component: MapPage, name: 'Map' },
+        { path: '/invitations', component: InvitationsPage, name: 'Invitations' },
+        { path: '/organizer-events', component: OrganizerEventsPage, name: 'OrganizerEvents' },
+        { path: '/create-event', component: CreateEventPage, name: 'CreateEvent' },
+        { path: '/organizer-view-event/:eventId', component: OrganizerViewEventPage, name: 'ViewEventDetails' },
+        { path: '/send-invitation', component: SendInvitationPage, name: 'SendInvitation' },
+        { path: '/events/category/:categoryName', component: EventListByCategory, name: 'EventListByCategory' },
     ]
 });
 
