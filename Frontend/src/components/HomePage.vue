@@ -241,6 +241,7 @@ export default {
   justify-content: center;
   margin-top: 1em;
   position: relative;
+  color:black;
 }
 
 .search-bar input {
@@ -248,6 +249,7 @@ export default {
   width: 500px;
   border: none;
   border-radius: 5px 0 0 5px;
+
 }
 
 .search-bar button {
@@ -265,8 +267,8 @@ export default {
 
 .dropdown {
   position: absolute;
-  top: 40px;
-  left: 79px;
+  top: 100%;
+  left: 7.5%;
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 500px;
@@ -275,6 +277,7 @@ export default {
   z-index: 1000;
   color: #2D2C3C;
   border-radius: 0 0 5px 5px;
+  text-align: left;
 }
 
 .dropdown ul {

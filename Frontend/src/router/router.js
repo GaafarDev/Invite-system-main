@@ -8,13 +8,16 @@ import CreateEventPage from '../components/CreateEventPage.vue';
 import OrganizerViewEventPage from '../components/OrganizerViewEventPage.vue';
 import SendInvitationPage from '../components/SendInvitationPage.vue';
 import EventListByCategory from '../components/EventlistByCategory.vue';
+import LoginPage from '../components/LoginPage.vue';
+import SignupPage from '../components/SignupPage.vue';
 import ProfilePage from '../components/ProfilePage.vue';
-
 
 const routes = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/', component: HomePage, name: 'Home' },
+        { path: '/login', component: LoginPage, meta: { hideNavBarFooter: true } },
+        { path: '/signup', component: SignupPage, meta: { hideNavBarFooter: true } },
         { path: '/events', component: EventsPage, name: 'Events' },
         { path: '/map', component: MapPage, name: 'Map' },
         { path: '/invitations', component: InvitationsPage, name: 'Invitations' },

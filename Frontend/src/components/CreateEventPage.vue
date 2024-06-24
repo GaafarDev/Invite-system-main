@@ -254,7 +254,7 @@ export default {
 </script>
 
 
-<style>
+<style >
 .create-event-page {
   max-width: 800px;
   margin: 0 auto;

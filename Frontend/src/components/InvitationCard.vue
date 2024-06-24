@@ -97,7 +97,7 @@
   }
   </script>
   
-  <style>
+  <style >
   .invitationCard {
     display: flex;
     align-items: center;

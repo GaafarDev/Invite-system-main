@@ -13,13 +13,13 @@
     },
     data() {
       return {
-        userId: 2  // Replace this with the logic to get the current user's ID dynamically
+        userId: 3  // Replace this with the logic to get the current user's ID dynamically
       };
     }
   }
   </script>
   
-  <style>
+  <style >
   .appContainer {
     display: flex;
     justify-content: center; /* Centers horizontally */

@@ -11,7 +11,6 @@ use App\Models\TicketSale;
 use App\Models\Ticket;
 use App\Models\User;
 
-
 class EventController extends Controller
 {
     public function index()

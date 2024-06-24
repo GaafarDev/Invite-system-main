@@ -81,7 +81,7 @@ export default {
 };
 </script>
 
-<style>
+<style >
 .event-list {
     padding: 20px;
     margin-left: 5%;

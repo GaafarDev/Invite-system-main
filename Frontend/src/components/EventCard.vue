@@ -76,7 +76,7 @@
     }
     </script>
     
-    <style>
+    <style >
     @import '../assets/css/EventCard.css';
     </style>
     
