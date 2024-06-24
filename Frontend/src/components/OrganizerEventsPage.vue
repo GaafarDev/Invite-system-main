@@ -149,7 +149,6 @@ export default {
 </script>
 
 <style scoped>
-<style scoped>
 .organizer-events-page {
     padding: 20px;
     margin-left : 5%;
@@ -198,7 +197,6 @@ export default {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
-    border-radius: 5px;
     border-radius: 5px;
 }
 

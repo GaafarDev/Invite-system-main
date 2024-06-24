@@ -8,7 +8,6 @@ import CreateEventPage from '../components/CreateEventPage.vue';
 import OrganizerViewEventPage from '../components/OrganizerViewEventPage.vue';
 import SendInvitationPage from '../components/SendInvitationPage.vue';
 import EventListByCategory from '../components/EventlistByCategory.vue';
-import ProfilePage from '../components/ProfilePage.vue';
 
 const routes = createRouter({
     history: createWebHistory(),
@@ -22,7 +21,6 @@ const routes = createRouter({
         { path: '/organizer-view-event/:eventId', component: OrganizerViewEventPage, name: 'ViewEventDetails' },
         { path: '/send-invitation', component: SendInvitationPage, name: 'SendInvitation' },
         { path: '/events/category/:categoryName', component: EventListByCategory, name: 'EventListByCategory' },
-        {path: '/profile',  component: ProfilePage},
     ]
 });
 
