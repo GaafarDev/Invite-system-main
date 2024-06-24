@@ -1,7 +1,7 @@
 <template>
     <div class='navbar'> 
          <div class='AppLogo'>
-             <img src='../assets/Icons/InviteLogo.pngsssss' alt='logo'/>
+             <img src='../assets/Icons/InviteLogo.jpg' alt='logo'/>
          </div>
  
          <div class='menu'>
