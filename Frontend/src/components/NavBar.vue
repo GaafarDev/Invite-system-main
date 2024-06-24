@@ -6,7 +6,7 @@
  
          <div class='menu'>
              <ul>
-                 <li><router-link to='/' active-class = "active-page">Home</router-link></li>
+                 <li><router-link to='/' active-class = "active-page">Home  </router-link></li>
                  <li><router-link to='/events' active-class = "active-page">Events</router-link></li>
                  <li><router-link to='/invitations' active-class = "active-page">Invitations</router-link></li>
                  <li><router-link to='/map' active-class = "active-page">Map</router-link></li>
