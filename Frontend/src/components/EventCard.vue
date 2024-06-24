@@ -1,6 +1,5 @@
 <template>
     <div class="eventCard">
-        <h1>Explore Events</h1>
         <div class="upperCard">
             <div class="eventCardImage">
                 <img src="../assets/Images/Event.png" alt="Event Image"/>
@@ -24,7 +23,7 @@
                     <li>
                         <p>
                             <span class="price"><img src = "../assets/Icons/ticketCard.png" alt = "ticket"/>{{ eventPrice }}</span>
-                            <span class="interested"><img src = "../assets/Icons/starCard.png" alt = "ticket"/>{{ eventInterested }} interested</span>
+                            <span class="interested"><img src = "../assets/Icons/starCard.png" alt = "Interest"/>{{ eventInterested }} interested</span>
                         </p>
                     </li>
                 </ul>
