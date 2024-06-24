@@ -3,7 +3,7 @@
          <div class='AppLogo'>
              <img src='../assets/Icons/InviteLogo.jpg' alt='logo'/>
          </div>
- 
+         asdasdasdadwdas
          <div class='menu'>
              <ul>
                  <li><router-link to='/' active-class = "active-page">Home     </router-link></li>
