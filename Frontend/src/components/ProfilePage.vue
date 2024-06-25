@@ -20,18 +20,14 @@
             <h2 class="text-xl font-semibold mb-4">Account Information</h2>
             <div class="mb-6">
               <div class="flex items-center space-x-4 mb-4">
-                <img :src="profilePhoto || profilePicture" alt="Profile Photo" class="w-20 h-20 rounded-full">
+                <img :src="profile.pic_url || profilePicture" alt="Profile Photo" class="w-20 h-20 rounded-full">
                 <input type="file" @change="onPhotoSelected" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100">
               </div>
               <form @submit.prevent="saveProfile">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label class="block text-sm font-medium text-gray-700">First Name</label>
-                    <input v-model="profile.firstName" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700">Last Name</label>
-                    <input v-model="profile.lastName" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input v-model="profile.fullname" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Website</label>
@@ -47,14 +43,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <input v-model="profile.phoneNumber" type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <input v-model="profile.phone" type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Address</label>
                     <input v-model="profile.address" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700">City/Town</label>
+                    <label class="block text-sm font-medium text-gray-700">City</label>
                     <input v-model="profile.city" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                   </div>
                   <div>
@@ -62,8 +58,8 @@
                     <input v-model="profile.country" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700">Pincode</label>
-                    <input v-model="profile.pincode" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <label class="block text-sm font-medium text-gray-700">Postcode</label>
+                    <input v-model="profile.postcode" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                   </div>
                 </div>
                 <button type="submit" :disabled="isSaving" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
@@ -80,10 +76,6 @@
                 <label class="block text-sm font-medium text-gray-700">New Email</label>
                 <input v-model="newEmail" type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               </div>
-              <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700">Confirm New Email</label>
-                <input v-model="confirmNewEmail" type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-              </div>
               <button type="submit" :disabled="isChangingEmail" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
                 <span v-if="isChangingEmail">Changing...</span>
                 <span v-else>Change Email</span>
@@ -94,16 +86,8 @@
             <h2 class="text-xl font-semibold mb-4">Change Password</h2>
             <form @submit.prevent="changePassword">
               <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700">Current Password</label>
-                <input v-model="currentPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-              </div>
-              <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700">New Password</label>
                 <input v-model="newPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-              </div>
-              <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
-                <input v-model="confirmNewPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
               </div>
               <button type="submit" :disabled="isChangingPassword" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
                 <span v-if="isChangingPassword">Changing...</span>
@@ -131,24 +115,20 @@ export default {
   data() {
     return {
       currentSection: 'accountInfo',
-      profilePhoto: '',
       profilePicture,
       profile: {
-        firstName: '',
-        lastName: '',
+        fullname: '',
         website: '',
         company: '',
-        phoneNumber: '',
+        phone: '',
         address: '',
         city: '',
         country: '',
-        pincode: ''
+        postcode: '',
+        pic_url: ''
       },
       newEmail: '',
-      confirmNewEmail: '',
-      currentPassword: '',
       newPassword: '',
-      confirmNewPassword: '',
       loading: true,
       isSaving: false,
       isChangingEmail: false,
@@ -167,20 +147,7 @@ export default {
           'Authorization': `Bearer ${token}`
         }
       });
-      const userData = response.data;
-
-      this.profile = {
-        firstName: userData.fullname.split(' ')[0],
-        lastName: userData.fullname.split(' ')[1] || '',
-        website: userData.website || '',
-        company: userData.company || '',
-        phoneNumber: userData.phone || '',
-        address: userData.address || '',
-        city: userData.city || '',
-        country: userData.country || '',
-        pincode: userData.postcode || ''
-      };
-
+      this.profile = response.data;
       this.loading = false;
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -195,44 +162,56 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = e => {
-          this.profilePhoto = e.target.result;
+          this.profile.pic_url = e.target.result;
         };
         reader.readAsDataURL(file);
       }
     },
     async saveProfile() {
-      this.isSaving = true;
-      try {
-        const token = localStorage.getItem('token');
-        const userId = localStorage.getItem('id');
+  this.isSaving = true;
+  try {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('id');
 
-        const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, this.profile, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        console.log('Profile saved:', response.data);
-        this.successMessage = 'Profile saved successfully!';
-        setTimeout(() => this.successMessage = '', 3000);
-      } catch (error) {
-        console.error('Error saving profile:', error);
-        this.errorMessage = 'Error saving profile!';
-        setTimeout(() => this.errorMessage = '', 3000);
-      } finally {
-        this.isSaving = false;
+    // Log the profile data before sending
+    console.log('Sending profile data:', this.profile);
+
+    const formData = new FormData();
+    Object.keys(this.profile).forEach(key => {
+      formData.append(key, this.profile[key]);
+    });
+
+    const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, this.profile, {
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-    },
+    });
+
+    console.log('Profile saved:', response.data);
+    this.successMessage = 'Profile saved successfully!';
+    setTimeout(() => (this.successMessage = ''), 3000);
+  } catch (error) {
+    console.error('Error saving profile:', error);
+
+    // Log the full error response if available
+    if (error.response) {
+      console.error('Error response:', error.response.data);
+    }
+
+    this.errorMessage = 'Error saving profile!';
+    setTimeout(() => (this.errorMessage = ''), 3000);
+  } finally {
+    this.isSaving = false;
+  }
+}
+,
     async changeEmail() {
-      if (this.newEmail !== this.confirmNewEmail) {
-        alert("Emails do not match!");
-        return;
-      }
       this.isChangingEmail = true;
       try {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('id');
 
-        const response = await axios.post(`http://127.0.0.1:8000/api/users/${userId}/change-email`, { email: this.newEmail }, {
+        const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}/email`, { email: this.newEmail }, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -249,18 +228,13 @@ export default {
       }
     },
     async changePassword() {
-      if (this.newPassword !== this.confirmNewPassword) {
-        alert("Passwords do not match!");
-        return;
-      }
       this.isChangingPassword = true;
       try {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('id');
 
-        const response = await axios.post(`http://127.0.0.1:8000/api/users/${userId}/change-password`, {
-          currentPassword: this.currentPassword,
-          newPassword: this.newPassword
+        const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}/password`, {
+          password: this.newPassword
         }, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -282,7 +256,6 @@ export default {
 </script>
 
 <style scoped>
-/* Tailwind CSS already provides styling, so no additional CSS is needed */
 .spinner-border {
   border-top-color: #3490dc;
   border-right-color: #3490dc;
