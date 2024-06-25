@@ -35,6 +35,7 @@ Route::middleware('api')->group(function () {
     Route::get('ticketsales', [TicketSaleController::class, 'index']); // Get all ticket sales
     Route::post('ticketsales', [TicketSaleController::class, 'store']);
     Route::get('users/{userId}/ticket-sales', [TicketSaleController::class, 'userTicketSales']); // Route added for user ticket sales
+    Route::get('/users/{userId}/interests', 'App\Http\Controllers\InterestController@getInterestsByUser');
 
     // Ticket routes
     Route::get('tickets', [TicketController::class, 'index']); // Get all tickets
@@ -45,5 +46,7 @@ Route::middleware('api')->group(function () {
     Route::get('interests', [InterestController::class, 'index']);
     Route::post('interests', [InterestController::class, 'store']);
     Route::delete('interests', [InterestController::class, 'destroy']);
+    Route::delete('/interests', [InterestController::class, 'deleteAllInterests']);
+
 });
 
