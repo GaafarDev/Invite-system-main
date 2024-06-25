@@ -1,31 +1,43 @@
 <template>
-  <div class='navbar'>
-    <div class='AppLogo'>
-      <img src='../assets/Icons/InviteLogo.png' alt='logo'/>
+  <nav class="navbar flex items-center justify-between px-5">
+    <div class="AppLogo">
+      <img src="../assets/Icons/InviteLogo.png" alt="logo" class="h-12" />
     </div>
-    <div class='menu'>
-      <ul>
-        <li><router-link to='/' active-class="active-page">Home</router-link></li>
-        <li><router-link to='/events' active-class="active-page">Events</router-link></li>
-        <li><router-link to='/invitations' active-class="active-page">Invitations</router-link></li>
-        <li><router-link to='/organizer-events' active-class="active-page">Organized Events</router-link></li>
-      </ul>
-    </div>
-    <div class='icons'>
-      <ul>
-        <li><router-link to="/create-event" class="navCreateEvent">Create Event</router-link></li>
-        <li><router-link to="#"><img src='../assets/Icons/ticket_icon.png' alt='Tickets' title="Tickets"/></router-link></li>
-        <li><router-link to="#"><img src='../assets/Icons/star_icon.png' alt='Interested' title="Interested"/></router-link></li>
-        <li class="profile-dropdown">
-          <router-link to="#"><img src='../assets/Icons/profile_icon.png' alt='Profile'/></router-link>
-          <div class="dropdown-content">
-            <router-link to="/profile">Profile</router-link>
-            <router-link to="#" @click.prevent="logout">Logout</router-link>
-          </div>
+    <div class="menu flex-1 flex justify-center">
+      <ul class="flex list-none space-x-4 text-lg">
+        <li>
+          <router-link to="/" active-class="active-page" class="nav-link">Home</router-link>
+        </li>
+        <li>
+          <router-link to="/events" active-class="active-page" class="nav-link">Events</router-link>
+        </li>
+        <li>
+          <router-link to="/invitations" active-class="active-page" class="nav-link">Invitations</router-link>
+        </li>
+        <li>
+          <router-link to="/organizer-events" active-class="active-page" class="nav-link">Organized Events</router-link>
         </li>
       </ul>
     </div>
-  </div>
+    <div class="icons flex items-center space-x-4">
+      <router-link to="/create-event" class="nav-link">Create Event</router-link>
+      <router-link to="#">
+        <img src="../assets/Icons/ticket_icon.png" alt="Tickets" title="Tickets" class="h-8 w-8" />
+      </router-link>
+      <router-link to="#">
+        <img src="../assets/Icons/star_icon.png" alt="Interested" title="Interested" class="h-8 w-8" />
+      </router-link>
+      <div class="relative profile-dropdown">
+        <router-link to="#">
+          <img src="../assets/Icons/profile_icon.png" alt="Profile" class="h-8 w-8" />
+        </router-link>
+        <div class="dropdown-content absolute right-0 bg-dropdown-bg shadow-dropdown mt-2 rounded-lg hidden">
+          <router-link to="/profile" class="block px-4 py-2 text-black">Profile</router-link>
+          <router-link to="#" @click.prevent="logout" class="block px-4 py-2 text-black">Logout</router-link>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -70,14 +82,14 @@ export default {
 
     // Toggle dropdown display on click
     dropdown.addEventListener('click', function(event) {
-      dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+      dropdownContent.classList.toggle('hidden');
       event.stopPropagation(); // Prevent the click from being detected by the document
     });
 
     // Hide dropdown if clicking outside of it
     document.addEventListener('click', function() {
-      if (dropdownContent.style.display === 'block') {
-        dropdownContent.style.display = 'none';
+      if (!dropdownContent.classList.contains('hidden')) {
+        dropdownContent.classList.add('hidden');
       }
     });
   }
@@ -85,19 +97,39 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/NavBar.css';
-
-/* Additional CSS to ensure the dropdown works correctly */
-.dropdown-content {
-  display: none; /* Hide the dropdown content by default */
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+.active-page {
+  font-weight: bold;
+  color: #FFE047;
 }
 
-.profile-dropdown:hover .dropdown-content {
-  display: block;
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+</style>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.navbar {
+  width: 100%;
+  height: 65px;
+  background-color: #2B293D;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  transition: color 0.4s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #FFE047;
+  font-weight: bold;
 }
 </style>

@@ -24,7 +24,7 @@ Route::middleware('api')->group(function () {
     Route::get('events/{id}', [EventController::class, 'show']);
     Route::post('events', [EventController::class, 'store']);
     Route::get('users/{userId}/createdevents', [EventController::class, 'userCreatedEvents']);
-
+    Route::get('api/events/search', [EventController::class, 'search']);
     // Invitation routes
     Route::get('invitations', [InvitationController::class, 'index']); // Get all invitations
     Route::get('users/{userId}/invitations', [InvitationController::class, 'userInvitations']);

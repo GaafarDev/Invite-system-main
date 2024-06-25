@@ -1,111 +1,130 @@
 <template>
-  <div>
-    <h1>My Account</h1>
-    <div class="account-settings">
-      <aside>
-        <ul>
-          <li @click="currentSection = 'accountInfo'">Account Info</li>
-          <li @click="currentSection = 'changeEmail'">Change Email</li>
-          <li @click="currentSection = 'password'">Password</li>
+  <div class="max-w-4xl mx-auto py-8">
+    <h1 class="text-2xl font-semibold mb-6">My Account</h1>
+    <div class="flex space-x-8">
+      <aside class="w-1/4 bg-gray-100 p-4 rounded-lg">
+        <ul class="space-y-4">
+          <li @click="currentSection = 'accountInfo'" class="cursor-pointer hover:underline">Account Info</li>
+          <li @click="currentSection = 'changeEmail'" class="cursor-pointer hover:underline">Change Email</li>
+          <li @click="currentSection = 'password'" class="cursor-pointer hover:underline">Password</li>
         </ul>
       </aside>
-      <main>
-        <div v-if="currentSection === 'accountInfo'">
-          <h1>Account Information</h1>
-          <div class="profile-photo">
-            <img :src="profilePhoto || profilePicture" alt="Profile Photo">
-            <input type="file" @change="onPhotoSelected">
+      <main class="flex-1 bg-white p-8 rounded-lg shadow-md">
+        <div v-if="loading" class="text-center">
+          <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+            <span class="visually-hidden">Loading...</span>
           </div>
-          <form @submit.prevent="saveProfile">
-            <div class="form-section">
-              <h2>Profile Information</h2>
-              <label>
-                First Name:
-                <input v-model="profile.firstName" type="text">
-              </label>
-              <label>
-                Last Name:
-                <input v-model="profile.lastName" type="text">
-              </label>
-              <label>
-                Website:
-                <input v-model="profile.website" type="url">
-              </label>
-              <label>
-                Company:
-                <input v-model="profile.company" type="text">
-              </label>
-            </div>
-            <div class="form-section">
-              <h2>Contact Details</h2>
-              <p>These details are private and only used to contact you for ticketing or prizes.</p>
-              <label>
-                Phone Number:
-                <input v-model="profile.phoneNumber" type="tel">
-              </label>
-              <label>
-                Address:
-                <input v-model="profile.address" type="text">
-              </label>
-              <label>
-                City/Town:
-                <input v-model="profile.city" type="text">
-              </label>
-              <label>
-                Country:
-                <input v-model="profile.country" type="text">
-              </label>
-              <label>
-                Pincode:
-                <input v-model="profile.pincode" type="text">
-              </label>
-            </div>
-            <button type="submit">Save My Profile</button>
-          </form>
         </div>
-        <div v-if="currentSection === 'changeEmail'">
-          <h1>Change Email</h1>
-          <form @submit.prevent="changeEmail">
-            <div class="form-section">
-              <label>
-                New Email:
-                <input v-model="newEmail" type="email">
-              </label>
-              <label>
-                Confirm New Email:
-                <input v-model="confirmNewEmail" type="email">
-              </label>
+        <div v-if="!loading">
+          <div v-if="currentSection === 'accountInfo'">
+            <h2 class="text-xl font-semibold mb-4">Account Information</h2>
+            <div class="mb-6">
+              <div class="flex items-center space-x-4 mb-4">
+                <img :src="profilePhoto || profilePicture" alt="Profile Photo" class="w-20 h-20 rounded-full">
+                <input type="file" @change="onPhotoSelected" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100">
+              </div>
+              <form @submit.prevent="saveProfile">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">First Name</label>
+                    <input v-model="profile.firstName" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">Last Name</label>
+                    <input v-model="profile.lastName" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">Website</label>
+                    <input v-model="profile.website" type="url" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">Company</label>
+                    <input v-model="profile.company" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                  </div>
+                </div>
+                <h3 class="text-lg font-medium mb-4">Contact Details</h3>
+                <p class="text-sm text-gray-600 mb-6">These details are private and only used to contact you for ticketing or prizes.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input v-model="profile.phoneNumber" type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">Address</label>
+                    <input v-model="profile.address" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">City/Town</label>
+                    <input v-model="profile.city" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">Country</label>
+                    <input v-model="profile.country" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700">Pincode</label>
+                    <input v-model="profile.pincode" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                  </div>
+                </div>
+                <button type="submit" :disabled="isSaving" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+                  <span v-if="isSaving">Saving...</span>
+                  <span v-else>Save My Profile</span>
+                </button>
+              </form>
             </div>
-            <button type="submit">Change Email</button>
-          </form>
-        </div>
-        <div v-if="currentSection === 'password'">
-          <h1>Change Password</h1>
-          <form @submit.prevent="changePassword">
-            <div class="form-section">
-              <label>
-                Current Password:
-                <input v-model="currentPassword" type="password">
-              </label>
-              <label>
-                New Password:
-                <input v-model="newPassword" type="password">
-              </label>
-              <label>
-                Confirm New Password:
-                <input v-model="confirmNewPassword" type="password">
-              </label>
-            </div>
-            <button type="submit">Change Password</button>
-          </form>
+          </div>
+          <div v-if="currentSection === 'changeEmail'">
+            <h2 class="text-xl font-semibold mb-4">Change Email</h2>
+            <form @submit.prevent="changeEmail">
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">New Email</label>
+                <input v-model="newEmail" type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+              </div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Confirm New Email</label>
+                <input v-model="confirmNewEmail" type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+              </div>
+              <button type="submit" :disabled="isChangingEmail" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+                <span v-if="isChangingEmail">Changing...</span>
+                <span v-else>Change Email</span>
+              </button>
+            </form>
+          </div>
+          <div v-if="currentSection === 'password'">
+            <h2 class="text-xl font-semibold mb-4">Change Password</h2>
+            <form @submit.prevent="changePassword">
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Current Password</label>
+                <input v-model="currentPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+              </div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">New Password</label>
+                <input v-model="newPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+              </div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                <input v-model="confirmNewPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+              </div>
+              <button type="submit" :disabled="isChangingPassword" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+                <span v-if="isChangingPassword">Changing...</span>
+                <span v-else>Change Password</span>
+              </button>
+            </form>
+          </div>
         </div>
       </main>
+    </div>
+    <div v-if="successMessage" class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-md">
+      {{ successMessage }}
+    </div>
+    <div v-if="errorMessage" class="fixed bottom-4 right-4 bg-red-500 text-white py-2 px-4 rounded-md">
+      {{ errorMessage }}
     </div>
   </div>
 </template>
 
 <script>
-import apiClient from '../services/api.js';
+import axios from 'axios';
 import profilePicture from '../assets/Images/profile_picture.png';
 
 export default {
@@ -130,12 +149,24 @@ export default {
       currentPassword: '',
       newPassword: '',
       confirmNewPassword: '',
-      profileLoaded: false // Flag to indicate if profile data has been loaded
+      loading: true,
+      isSaving: false,
+      isChangingEmail: false,
+      isChangingPassword: false,
+      successMessage: '',
+      errorMessage: ''
     };
   },
   async mounted() {
     try {
-      const response = await apiClient.get('/api/users/1');
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('id');
+      
+      const response = await axios.get(`http://127.0.0.1:8000/api/users/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       const userData = response.data;
 
       this.profile = {
@@ -150,9 +181,12 @@ export default {
         pincode: userData.postcode || ''
       };
 
-      this.profileLoaded = true; // Mark profile data as loaded
+      this.loading = false;
     } catch (error) {
       console.error('Error fetching user data:', error);
+      this.loading = false;
+      this.errorMessage = 'Failed to load profile data';
+      setTimeout(() => this.errorMessage = '', 3000);
     }
   },
   methods: {
@@ -167,11 +201,25 @@ export default {
       }
     },
     async saveProfile() {
+      this.isSaving = true;
       try {
-        const response = await apiClient.post('/api/profile', this.profile);
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('id');
+
+        const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, this.profile, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         console.log('Profile saved:', response.data);
+        this.successMessage = 'Profile saved successfully!';
+        setTimeout(() => this.successMessage = '', 3000);
       } catch (error) {
         console.error('Error saving profile:', error);
+        this.errorMessage = 'Error saving profile!';
+        setTimeout(() => this.errorMessage = '', 3000);
+      } finally {
+        this.isSaving = false;
       }
     },
     async changeEmail() {
@@ -179,11 +227,25 @@ export default {
         alert("Emails do not match!");
         return;
       }
+      this.isChangingEmail = true;
       try {
-        const response = await apiClient.post('/api/change-email', { email: this.newEmail });
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('id');
+
+        const response = await axios.post(`http://127.0.0.1:8000/api/users/${userId}/change-email`, { email: this.newEmail }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         console.log('Email changed:', response.data);
+        this.successMessage = 'Email changed successfully!';
+        setTimeout(() => this.successMessage = '', 3000);
       } catch (error) {
         console.error('Error changing email:', error);
+        this.errorMessage = 'Error changing email!';
+        setTimeout(() => this.errorMessage = '', 3000);
+      } finally {
+        this.isChangingEmail = false;
       }
     },
     async changePassword() {
@@ -191,14 +253,28 @@ export default {
         alert("Passwords do not match!");
         return;
       }
+      this.isChangingPassword = true;
       try {
-        const response = await apiClient.post('/api/change-password', {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('id');
+
+        const response = await axios.post(`http://127.0.0.1:8000/api/users/${userId}/change-password`, {
           currentPassword: this.currentPassword,
           newPassword: this.newPassword
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         });
         console.log('Password changed:', response.data);
+        this.successMessage = 'Password changed successfully!';
+        setTimeout(() => this.successMessage = '', 3000);
       } catch (error) {
         console.error('Error changing password:', error);
+        this.errorMessage = 'Error changing password!';
+        setTimeout(() => this.errorMessage = '', 3000);
+      } finally {
+        this.isChangingPassword = false;
       }
     }
   }
@@ -206,5 +282,11 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/Profile.css';
+/* Tailwind CSS already provides styling, so no additional CSS is needed */
+.spinner-border {
+  border-top-color: #3490dc;
+  border-right-color: #3490dc;
+  border-bottom-color: transparent;
+  border-left-color: #3490dc;
+}
 </style>

@@ -39,31 +39,31 @@ export default {
     };
   },
   methods: {
-  async login() {
-    try {
-      // First, get the CSRF cookie
-      await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie');
+    async login() {
+  try {
+    // First, get the CSRF cookie
+    await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie');
 
-      // Then, proceed with the login request
-      const response = await axios.post('http://127.0.0.1:8000/api/login', {
-        username: this.username,
-        password: this.password
-      }, { withCredentials: true }); // Ensure withCredentials is set
+    // Then, proceed with the login request
+    const response = await axios.post('http://127.0.0.1:8000/api/login', {
+      username: this.username,
+      password: this.password
+    }, { withCredentials: true }); // Ensure withCredentials is set
 
-      console.log(response.data);  // Log the entire response to see the token
+    console.log(response.data);  // Log the entire response to see the token
 
-      if (response.status === 200) {
-  localStorage.setItem('token', response.data.token);
-  localStorage.setItem('id', response.data.id.toString());
-        // Redirect to dashboard
-        this.$router.push('/');
-}  // Ensure token is stored correctly
-
-    } catch (error) {
-      console.error('Login error:', error);
-      this.errorMessage = 'Invalid credentials';
+    if (response.status === 200) {
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('id', response.data.id.toString()); // Store the user ID
+      // Redirect to dashboard
+      this.$router.push('/');
     }
+  } catch (error) {
+    console.error('Login error:', error);
+    this.errorMessage = 'Invalid credentials';
   }
+}
+
   // async login() {
   //   try {
   //     // First, get the CSRF cookie

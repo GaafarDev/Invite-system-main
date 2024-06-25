@@ -1,7 +1,13 @@
 <template>
-    <div class="event-list">
-        <h1>{{ categoryName }} Events</h1>
-        <div class="event-cards">
+    <div class="p-8">
+        <h1 class="text-3xl font-bold mb-8">{{ categoryName }} Events</h1>
+        <div v-if="loading" class="flex justify-center items-center">
+            <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+        </div>
+        <div v-else-if="error" class="text-red-500 text-center">
+            There was an error fetching the events. Please try again later.
+        </div>
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <EventCard 
                 v-for="event in mappedEvents" 
                 :key="event.id" 
@@ -15,6 +21,7 @@
                 :event-time="event.eventTime"
                 :event-price="event.eventPrice"
                 :event-interested="event.eventInterested"
+                class="cursor-pointer transition-transform transform hover:scale-105"
             />
         </div>
     </div>
@@ -31,7 +38,9 @@ export default {
     data() {
         return {
             events: [],
-            filteredEvents: []
+            filteredEvents: [],
+            loading: true,
+            error: false
         };
     },
     computed: {
@@ -58,9 +67,12 @@ export default {
                 .then(response => {
                     this.events = response.data;
                     this.filterEventsByCategory();
+                    this.loading = false;
                 })
                 .catch(error => {
                     console.error("There was an error fetching the events!", error);
+                    this.error = true;
+                    this.loading = false;
                 });
         },
         filterEventsByCategory() {
@@ -81,17 +93,18 @@ export default {
 };
 </script>
 
-<style >
-.event-list {
-    padding: 20px;
-    margin-left: 5%;
-    margin-right: 5%;
+<style>
+.loader {
+    border-top-color: #3498db;
+    animation: spinner 0.6s linear infinite;
 }
 
-.event-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>

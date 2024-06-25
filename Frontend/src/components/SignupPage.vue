@@ -75,7 +75,7 @@ export default {
           password_confirmation: this.password_confirmation
         });
         console.log(response.data.message);
-        // Redirect to login page or dashboard
+        // Redirect to login page or dashboard``
         this.$router.push('/login');
       } catch (error) {
         if (error.response && error.response.data.errors) {

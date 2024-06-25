@@ -139,5 +139,21 @@ public function upcoming(Request $request, $userId)
         $events = Event::where('user_id', $userId)->with(['tickets', 'interests'])->get();
         return response()->json($events, 200);
     }
+
+    public function search(Request $request) {
+        $query = $request->input('query');
+        Log::info('Search query received:', ['query' => $query]); // Logging the query for debugging
+      
+        $events = Event::where('title', 'like', "%{$query}%")
+          ->orWhere('description', 'like', "%{$query}%")
+          ->orWhere('location', 'like', "%{$query}%")
+          ->get();
+      
+        Log::info('Search results:', ['events' => $events]); // Logging the results for debugging
+        return response()->json($events);
+      }
+      
+      
+
 }
 
