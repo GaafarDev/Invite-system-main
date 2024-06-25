@@ -17,6 +17,9 @@
         <li>
           <router-link to="/organizer-events" active-class="active-page" class="nav-link">Organized Events</router-link>
         </li>
+        <li>
+          <router-link to='/finance' active-class = "active-page" class="nav-link">Finance Page</router-link>
+        </li>
       </ul>
     </div>
     <div class="icons flex items-center space-x-4">
@@ -52,7 +55,8 @@ export default {
     async logout() {
       try {
         const token = localStorage.getItem('token');
-        if (!token) {
+        const id = localStorage.getItem('id');
+        if (!token | !id) {
           throw new Error('No token found in local storage');
         }
         await apiClient.post('/api/logout', {}, {
