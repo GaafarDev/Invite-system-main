@@ -44,6 +44,7 @@
             v-for="event in displayedUpcomingEvents"
             :key="event.id"
             @click="goToEventDetails(event)"
+            :eventId="event.id" 
             :eventType="event.category"
             :eventMonth="getMonth(event.start_datetime)"
             :eventDays="getDays(event.start_datetime, event.end_datetime)"
@@ -52,7 +53,7 @@
             :eventTime="getTime(event.start_datetime, event.end_datetime)"
             :eventPrice="getPrice(event.tickets)"
             :eventInterested="event.interests.length"
-            class="transform hover:scale-105 transition duration-300"
+            class="transform hover:scale-105 transition duration-300 opacity-75"
           />
         </div>
         <div class="text-center mt-8">
