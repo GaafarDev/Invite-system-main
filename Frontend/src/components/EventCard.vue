@@ -7,8 +7,13 @@
             {{ eventType }}
           </div>
           <div class="eventStar absolute top-2 right-2">
-            <img src="../assets/Icons/star_icon.png" alt="Star Icon" class="w-6 h-6" />
-          </div>
+    <img 
+      :src="currentIcon" 
+      alt="Star Icon" 
+      class="w-6 h-6" 
+      @click="toggleIcon"
+    />
+  </div>
         </div>
       </div>
       <div class="bottomCard p-5 flex">
@@ -46,8 +51,22 @@
   </template>
   
   <script>
+//   import defaultIcon from '../assets/Icons/star_icon.png';
+// import clickedIcon from '../assets/Icons/white_star_icon.png';
+
   export default {
     name: 'EventCard',
+    data() {
+    return {
+      defaultIcon: '../assets/Icons/star_icon.png',
+      clickedIcon: '../assets/Icons/white_star_icon.png',
+      currentIcon: '../assets/Icons/star_icon.png',
+    };
+  },  methods: {
+    toggleIcon() {
+      this.currentIcon = this.currentIcon === this.defaultIcon ? this.clickedIcon : this.defaultIcon;
+    },
+  },
     props: {
       imageSrc: {
         type: String,
