@@ -103,6 +103,7 @@ export default {
       clickedIcon: require('../assets/Icons/white_star_icon.png'),
       currentIcon: require('../assets/Icons/star_icon.png'),
       isInterested: false,
+      isInterestedDefault: false,
       interestId: null,
       userId: null
     };
