@@ -51,7 +51,8 @@ export default {
     for (const ticket of this.tickets) {
       if (ticket.quantity > 0) {
         const payload = {
-          user_id: 1, // This should be dynamically set based on the logged-in user
+          // user_id: 1, // This should be dynamically set based on the logged-in user
+          user_id: localStorage.getItem('id'), // This should be dynamically set based on the logged-in user
           ticket_id: ticket.id,
           quantity: ticket.quantity,
         };
