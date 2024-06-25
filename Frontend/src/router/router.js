@@ -12,6 +12,7 @@ import EventListByCategory from '../components/EventlistByCategory.vue';
 import LoginPage from '../components/LoginPage.vue';
 import SignupPage from '../components/SignupPage.vue';
 import ProfilePage from '../components/ProfilePage.vue';
+import FinancePage from '../components/FinancePage.vue';
 
 const routes = createRouter({
     history: createWebHistory(),
@@ -29,6 +30,7 @@ const routes = createRouter({
         { path: '/events/category/:categoryName', component: EventListByCategory, name: 'EventListByCategory' },
         { path: '/profile',  component: ProfilePage},
         { path: '/events/:eventId', component: EventDetailsPage, name: 'UserEventDetails' },
+        {path: '/finance',  component: FinancePage, name: 'FinancePage'},
     ]
 });
 
