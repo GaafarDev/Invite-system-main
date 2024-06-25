@@ -1,6 +1,6 @@
 <?php
 return [
-    'paths' => ['api/*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['https://invite-system-frontend1.up.railway.app'],
     'allowed_origins_patterns' => [],
