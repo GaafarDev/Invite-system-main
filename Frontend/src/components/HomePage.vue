@@ -20,7 +20,7 @@
           </button>
           <div v-if="searchQuery.length > 2 && filteredEvents.length > 0" class="suggestions absolute top-full left-0 w-full mt-2 bg-white shadow-xl rounded-md overflow-hidden z-10">
             <ul class="max-h-60 overflow-y-auto">
-              <li v-for="event in filteredEvents" :key="event.id" @click="selectEvent(event)" class="px-4 py-3 cursor-pointer hover:bg-yellow-100 transition duration-200 border-b border-gray-200 last:border-b-0">
+              <li v-for="event in filteredEvents" :key="event.id" @click="selectEvent(event)" class="px-4 py-3 cursor-pointer hover:bg-yellow-100 transition duration-200 border-b border-gray-200 last:border-b-0 text-left">
                 <div class="font-semibold text-gray-800">{{ event.title }}</div>
                 <div class="text-sm text-gray-600">{{ event.location }} | {{ formatDate(event.start_datetime) }}</div>
               </li>
