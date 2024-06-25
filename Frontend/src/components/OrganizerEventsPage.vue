@@ -1,17 +1,12 @@
 <template>
   <div class="events-page bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-12">
-      <h1 class="text-4xl font-bold mb-8 text-center">My Hosted Events</h1>
+      <h1 class="text-4xl font-bold mb-8 text-center">My Organized Events</h1>
       
-      <div class="filters flex flex-wrap justify-center space-x-4 mb-8">
-        <button v-for="filter in ['All', 'Today', 'Tomorrow', 'This Weekend', 'Free']" :key="filter"
-                class="filter-btn py-2 px-6 bg-white shadow-md rounded-full hover:bg-yellow-400 hover:text-white transition-all duration-300 mb-2">
-          {{ filter }}
-        </button>
-      </div>
+  
 
       <div class="upcoming-events mb-16">
-        <h2 class="text-3xl font-semibold mb-6">Upcoming Hosted Events</h2>
+        <h2 class="text-3xl font-semibold mb-6">Upcoming Organized Events</h2>
         <div class="event-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <EventCard
             v-for="event in displayedUpcomingEvents"
@@ -38,7 +33,7 @@
       </div>
 
       <div class="past-events">
-        <h2 class="text-3xl font-semibold mb-6">Hosted Event History</h2>
+        <h2 class="text-3xl font-semibold mb-6">Past Organized History</h2>
         <div class="event-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <EventCard
             v-for="event in displayedPastEvents"
@@ -97,7 +92,7 @@ export default {
     },
     pastEvents() {
       const now = new Date();
-      return this.events.filter(event => new Date(event.end_datetime) < now);
+      return this.events.filter(event => new Date(event.start_datetime) < now);
     }
   },
   methods: {
@@ -139,33 +134,40 @@ export default {
       return `RM ${Math.min(...tickets.map(ticket => ticket.ticket_price))}`;
     },
     fetchEvents() {
-  axios.get('http://127.0.0.1:8000/api/events')
-    .then(response => {
-      this.events = response.data;
-      this.updateDisplayedUpcomingEvents();
-      this.updateDisplayedPastEvents();
+      const userId = localStorage.getItem('id');
+      if (!userId) {
+        console.error('User ID not found in localStorage');
+        return;
+      }
 
-      // Log the eventId for each event
-      this.events.forEach(event => {
-        console.log(`Event ID: ${event.id}`);
-      });
-    })
-    .catch(error => {
-      console.error("There was an error fetching the events!", error);
-    });
-},
+      // axios.get(`http://127.0.0.1:8000/api/events/upcoming/${userId}`)
+      axios.get(` http://127.0.0.1:8000/api/users/${userId}/createdevents`)
+     
+        .then(response => {
+          // Log the response from Axios
+          console.log('Axios Response:', response);
+
+          // Update events and displayed events
+          this.events = response.data;
+          this.updateDisplayedUpcomingEvents();
+          this.updateDisplayedPastEvents();
+        })
+        .catch(error => {
+          console.error("There was an error fetching the events!", error);
+        });
+    },
     goToEventDetails(event) {
-      this.$router.push({
-        name: 'ViewEventDetails',
-        params: {
-          eventId: event.id
-        }
-      });
+        this.$router.push({
+          name: 'ViewEventDetails',
+          params: {
+            eventId: event.id
+          }
+        });
+      }
+    },
+    mounted() {
+      this.fetchEvents();
     }
-  },
-  mounted() {
-    this.fetchEvents();
-  }
 };
 </script>
 

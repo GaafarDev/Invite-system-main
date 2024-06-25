@@ -287,7 +287,7 @@ export default {
         return false;
       }
       return true;
-    },
+},
     addTicket() {
       this.formData.tickets.push({ name: '', price: '' });
     },

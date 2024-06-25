@@ -71,34 +71,22 @@ public function upcoming(Request $request, $userId)
                                           ->whereIn('status', ['accepted', 'Accepted'])
                                           ->get();
 
-        // Initialize an empty array to store events
-        $events = [];
+        // Collect all event IDs from ticket sales and accepted invitations
+        $eventIds = collect($ticketSales)->pluck('ticket.event_id')->merge($acceptedInvitations->pluck('event_id'))->unique();
 
-        // Iterate through each TicketSale to get the associated Event
-        foreach ($ticketSales as $ticketSale) {
-            $ticket = Ticket::find($ticketSale->ticket_id);
-            if ($ticket && $ticket->event) {
-                $events[] = $ticket->event;
-            }
-        }
+        // Fetch events with their associated tickets and interests
+        $events = Event::whereIn('id', $eventIds)
+                       ->with(['tickets', 'interests'])
+                       ->get();
 
-        // Iterate through each Invitation to get the associated Event
-        foreach ($acceptedInvitations as $invitation) {
-            $event = Event::find($invitation->event_id);
-            if ($event) {
-                $events[] = $event;
-            }
-        }
-
-        // Filter and return unique events based on event ID
-        $uniqueEvents = collect($events)->unique('id')->values();
-
-        return response()->json($uniqueEvents, 200);
+        // Return events with tickets and interests
+        return response()->json($events, 200);
     } catch (\Exception $e) {
         \Log::error('Error in upcoming method: ' . $e->getMessage());
         return response()->json(['message' => 'Internal Server Error'], 500);
     }
 }
+
 
 
     
