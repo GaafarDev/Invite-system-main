@@ -11,7 +11,7 @@
       </div>
 
       <div class="upcoming-events mb-16">
-        <h2 class="text-3xl font-semibold mb-6">Upcoming Events</h2>
+        <h2 class="text-3xl font-semibold mb-6">Upcoming Participating Events</h2>
         <div class="event-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <EventCard
             v-for="event in displayedUpcomingEvents"
@@ -38,7 +38,7 @@
       </div>
 
       <div class="past-events">
-        <h2 class="text-3xl font-semibold mb-6">Hosted Event History</h2>
+        <h2 class="text-3xl font-semibold mb-6">Past Participated History</h2>
         <div class="event-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <EventCard
             v-for="event in displayedPastEvents"
@@ -97,7 +97,7 @@ export default {
     },
     pastEvents() {
       const now = new Date();
-      return this.events.filter(event => new Date(event.end_datetime) < now);
+      return this.events.filter(event => new Date(event.start_datetime) < now);
     }
   },
   methods: {
@@ -138,22 +138,27 @@ export default {
       }
       return `RM ${Math.min(...tickets.map(ticket => ticket.ticket_price))}`;
     },
-fetchEvents() {
-  axios.get('http://127.0.0.1:8000/api/events')
-    .then(response => {
-      this.events = response.data;
-      this.updateDisplayedUpcomingEvents();
-      this.updateDisplayedPastEvents();
+    fetchEvents() {
+      const userId = localStorage.getItem('id');
+      if (!userId) {
+        console.error('User ID not found in localStorage');
+        return;
+      }
 
-      // Log the eventId for each event
-      this.events.forEach(event => {
-        console.log(`Event ID: ${event.id}`);
-      });
-    })
-    .catch(error => {
-      console.error("There was an error fetching the events!", error);
-    });
-},
+      axios.get(`http://127.0.0.1:8000/api/events/upcoming/${userId}`)
+        .then(response => {
+          // Log the response from Axios
+          console.log('Axios Response:', response);
+
+          // Update events and displayed events
+          this.events = response.data;
+          this.updateDisplayedUpcomingEvents();
+          this.updateDisplayedPastEvents();
+        })
+        .catch(error => {
+          console.error("There was an error fetching the events!", error);
+        });
+    },
     goToEventDetails(event) {
       this.$router.push({
         name: 'UserEventDetails',
