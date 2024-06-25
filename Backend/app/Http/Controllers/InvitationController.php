@@ -21,10 +21,12 @@ class InvitationController extends Controller
     {
         $invitations = Invitation::where('user_id', $userId)
                                  ->where('status', 'pending')
+                                 ->with('event') // Include the related event data
                                  ->get();
-    
+        
         return response()->json($invitations, 200);
     }
+    
     
 
     public function store(Request $request)
@@ -53,16 +55,17 @@ class InvitationController extends Controller
 
     public function respondInvitation(Request $request, $invitation_id)
     {
-        $validatedData = $request->validate([
-            'status' => 'required|string|in:accepted,rejected',
+        $request->validate([
+            'response' => 'required|in:accepted,rejected',
         ]);
-
+    
         $invitation = Invitation::findOrFail($invitation_id);
-        $invitation->status = $validatedData['status'];
+        $invitation->status = $request->input('response');
         $invitation->save();
-
-        return response()->json($invitation, 200);
+    
+        return response()->json(['message' => 'Invitation response recorded successfully']);
     }
+    
     
 }
 

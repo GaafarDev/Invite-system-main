@@ -1,65 +1,66 @@
 <template>
-  <div class="view-event-details-page">
-    <div class="event-details" v-if="eventDetails">
-      <div class="review-details">
+  <div class="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <div v-if="eventDetails" class="md:flex">
         <!-- Event Image -->
-        <div class="event-image">
-          <img :src="eventDetails.image_link" alt="Event Image" />
+        <div class="md:flex-shrink-0">
+          <img class="h-48 w-full object-cover md:w-48" :src="eventDetails.image_link" alt="Event Image" />
         </div>
+        <div class="p-8">
+          <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{{ eventDetails.category }}</div>
+          <h1 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            {{ eventDetails.title }}
+          </h1>
+          
+          <!-- Date and Time -->
+          <div class="mt-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Date and Time</h3>
+            <div class="mt-2 text-base text-gray-500">
+              <p><span class="font-semibold">Starts:</span> {{ formatDateTime(eventDetails.start_datetime) }}</p>
+              <p><span class="font-semibold">Ends:</span> {{ formatDateTime(eventDetails.end_datetime) }}</p>
+            </div>
+          </div>
 
-        <div class="details">
-        <h1>{{ eventDetails.title }}</h1>
+          <!-- Location -->
+          <div class="mt-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Location</h3>
+            <p class="mt-2 text-base text-gray-500">{{ eventDetails.location }}</p>
+          </div>
 
-        <div class="date-time-section">
-          <h3>Date and Time</h3>
-          <div class="date-time">
-            <p><b>Starts:</b> {{ formatDateTime(eventDetails.start_datetime) }}</p>
-            <p><b>Ends:</b> {{ formatDateTime(eventDetails.end_datetime) }}</p>
+          <!-- Description -->
+          <div class="mt-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Description</h3>
+            <p class="mt-2 text-base text-gray-500">{{ eventDetails.description }}</p>
+          </div>
+
+          <!-- Tickets -->
+          <div class="mt-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Tickets</h3>
+            <ul class="mt-2 space-y-2">
+              <li v-for="ticket in eventDetails.tickets" :key="ticket.id" class="flex items-center justify-between">
+                <span class="text-base text-gray-500">{{ ticket.ticket_name }}</span>
+                <span class="text-base font-semibold text-gray-900">RM {{ ticket.ticket_price }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Interests and Invite -->
+          <div class="mt-8 flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500">
+                {{ eventDetails.interests.length }} people are interested
+              </p>
+            </div>
+            <button @click="sendInvitation" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <img src="../assets/Icons/send_invitation.png" alt="ticket" class="w-5 h-5 mr-2" />
+              Send Invitation
+            </button>
           </div>
         </div>
-
-        <!-- Location -->
-        <div class="location-section">
-          <h3>Location</h3>
-          <p>{{ eventDetails.location }}</p>
-        </div>
-
-        <!-- Category -->
-        <div class="category-section">
-          <h3>Category</h3>
-          <p>{{ eventDetails.category }}</p>
-        </div>
-
-        <!-- Description -->
-        <div class="description-section">
-          <h3>Description</h3>
-          <p>{{ eventDetails.description }}</p>
-        </div>
-
-        <div class="tickets-section">
-          <h3>Tickets</h3>
-          <ul>
-            <li v-for="ticket in eventDetails.tickets" :key="ticket.id">
-              {{ ticket.ticket_name }} - RM {{ ticket.ticket_price }}
-            </li>
-          </ul>
-        </div>
-
-        <div class="interests-and-invite">
-        <div class="interests-section">
-          <h3>Interests</h3>
-          <p>{{ eventDetails.interests.length }} people are interested</p>
-        </div>
-        <button @click="sendInvitation">
-          <img src = "../assets/Icons/send_invitation.png" alt = "ticket"/>
-          Send Invitation
-        </button>
       </div>
+      <div v-else class="p-8 text-center">
+        <p class="text-gray-500">Loading...</p>
       </div>
-    </div>
-    </div>
-    <div v-else>
-      <p>Loading...</p>
     </div>
   </div>
 </template>
