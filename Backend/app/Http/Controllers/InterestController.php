@@ -48,4 +48,15 @@ class InterestController extends Controller
             return response()->json(['message' => 'Interest not found.'], 404);
         }
     }
+
+    public function getInterestsByUser($userId)
+{
+    $interests = Interest::where('user_id', $userId)->get();
+    return response()->json($interests, 200);
+}
+    public function deleteAllInterests()
+    {
+        Interest::truncate();
+        return response()->json(null, 204);
+    }
 }
