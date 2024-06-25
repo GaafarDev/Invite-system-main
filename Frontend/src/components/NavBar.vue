@@ -29,7 +29,7 @@
       </router-link>
       <div class="relative profile-dropdown">
         <router-link to="#">
-          <img src="../assets/Icons/profile_icon.png" alt="Profile" class="h-8 w-8" />
+          <img src="../assets/Icons/profile_icon.png" alt="Profile" class="h-8 w-8 mr-5" />
         </router-link>
         <div class="dropdown-content absolute right-0 bg-dropdown-bg shadow-dropdown mt-2 rounded-lg hidden">
           <router-link to="/profile" class="block px-4 py-2 text-black">Profile</router-link>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import apiClient from '../services/api';  // Ensure this path is correct
+import apiClient from '../services/api';  
 
 export default {
   name: 'NavBar',
@@ -60,19 +60,18 @@ export default {
             Authorization: `Bearer ${token}`
           }
         });
-        localStorage.removeItem('token');  // Clear the token after logout
-        localStorage.removeItem('id');  // Clear the token after logout
-        this.$router.push('/login');  // Redirect to login page
+        localStorage.removeItem('token');  
+        localStorage.removeItem('id');  
+        this.$router.push('/login'); 
       } catch (error) {
         console.error('Logout error:', error);
-        // Handle error if the logout fails
       }
     },
     checkUser() {
       const userId = localStorage.getItem('id');
       const token = localStorage.getItem('token');
       if (!userId || !token) {
-        this.$router.push('/login'); // Redirect to login if no userId found
+        this.$router.push('/login');
       }
     }
   },
@@ -80,13 +79,11 @@ export default {
     const dropdown = this.$el.querySelector('.profile-dropdown');
     const dropdownContent = this.$el.querySelector('.dropdown-content');
 
-    // Toggle dropdown display on click
     dropdown.addEventListener('click', function(event) {
       dropdownContent.classList.toggle('hidden');
-      event.stopPropagation(); // Prevent the click from being detected by the document
+      event.stopPropagation(); 
     });
 
-    // Hide dropdown if clicking outside of it
     document.addEventListener('click', function() {
       if (!dropdownContent.classList.contains('hidden')) {
         dropdownContent.classList.add('hidden');
@@ -131,5 +128,35 @@ export default {
 .nav-link:hover {
   color: #FFE047;
   font-weight: bold;
+}
+
+.profile-dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 8px;
+  border-radius: 10px;
+  z-index: 1000; 
+  width: 150px;  
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.hidden {
+  display: none;
 }
 </style>

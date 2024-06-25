@@ -262,14 +262,28 @@ export default {
         });
     },
     validateStep1() {
+      if (!this.formData.eventTitle || !this.formData.eventCategory || !this.formData.startDate || 
+          !this.formData.startTime || !this.formData.endDate || !this.formData.endTime || 
+          !this.formData.eventLocation || !this.formData.eventDescription) {
+        alert('Please fill out all required fields.');
+        return false;
+      }
       return true;
     },
     validateStep2() {
+      if (!this.uploadedImage) {
+        alert('Please upload an image.');
+        return false;
+      }
       return true;
     },
     validateStep3() {
       if (!this.formData.eventType) {
         alert('Please select an event type.');
+        return false;
+      }
+      if (this.formData.eventType === 'Ticketed' && this.formData.tickets.length === 0) {
+        alert('Please add at least one ticket.');
         return false;
       }
       return true;
