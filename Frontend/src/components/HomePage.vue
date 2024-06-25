@@ -61,7 +61,7 @@
             :eventTime="getTime(event.start_datetime, event.end_datetime)"
             :eventPrice="getPrice(event.tickets)"
             :eventInterested="event.interests.length"
-            class="transform hover:scale-105 transition duration-300 opacity-75"
+            class="transform hover:scale-105 transition duration-300"
           />
         </div>
         <div class="text-center mt-8">
