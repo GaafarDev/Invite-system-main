@@ -27,7 +27,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                    <input v-model="profile.fullname" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <input v-model="profile.fullname" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Website</label>
@@ -43,23 +43,23 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <input v-model="profile.phone" type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <input v-model="profile.phone" type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Address</label>
-                    <input v-model="profile.address" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <input v-model="profile.address" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700">City</label>
-                    <input v-model="profile.city" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <input v-model="profile.city" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Country</label>
-                    <input v-model="profile.country" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <input v-model="profile.country" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700">Postcode</label>
-                    <input v-model="profile.postcode" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    <input v-model="profile.postcode" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                   </div>
                 </div>
                 <button type="submit" :disabled="isSaving" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
@@ -74,7 +74,7 @@
             <form @submit.prevent="changeEmail">
               <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700">New Email</label>
-                <input v-model="newEmail" type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                <input v-model="newEmail" type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
               </div>
               <button type="submit" :disabled="isChangingEmail" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
                 <span v-if="isChangingEmail">Changing...</span>
@@ -87,7 +87,7 @@
             <form @submit.prevent="changePassword">
               <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700">New Password</label>
-                <input v-model="newPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                <input v-model="newPassword" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
               </div>
               <button type="submit" :disabled="isChangingPassword" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
                 <span v-if="isChangingPassword">Changing...</span>
@@ -173,15 +173,22 @@ export default {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('id');
 
-    // Log the profile data before sending
-    console.log('Sending profile data:', this.profile);
+    // Ensure all fields are properly initialized and formatted
+    const profileData = {
+      fullname: this.profile.fullname || '',
+      website: this.profile.website || '',
+      company: this.profile.company || '',
+      phone: this.profile.phone || '',
+      address: this.profile.address || '',
+      city: this.profile.city || '',
+      country: this.profile.country || '',
+      postcode: this.profile.postcode || '',
+      pic_url: this.profile.pic_url || ''
+    };
 
-    const formData = new FormData();
-    Object.keys(this.profile).forEach(key => {
-      formData.append(key, this.profile[key]);
-    });
+    console.log('Sending profile data:', profileData);
 
-    const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, this.profile, {
+    const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, profileData, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -193,17 +200,17 @@ export default {
   } catch (error) {
     console.error('Error saving profile:', error);
 
-    // Log the full error response if available
     if (error.response) {
       console.error('Error response:', error.response.data);
     }
 
-    this.errorMessage = 'Error saving profile!';
+    this.errorMessage = error.response?.data?.message || 'Error saving profile!';
     setTimeout(() => (this.errorMessage = ''), 3000);
   } finally {
     this.isSaving = false;
   }
 }
+
 ,
     async changeEmail() {
       this.isChangingEmail = true;

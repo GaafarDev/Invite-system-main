@@ -89,32 +89,33 @@ public function login(Request $request)
         return response()->json($user, 200);
     }
 
-public function update(Request $request, $id)
-{
-    $user = User::findOrFail($id);
-
-    $validatedData = $request->validate([
-        'fullname' => 'sometimes|string|max:255',
-        'website' => 'sometimes|string|max:255',
-        'company' => 'sometimes|string|max:255',
-        'phone' => 'sometimes|string|max:15',
-        'address' => 'sometimes|string|max:255',
-        'city' => 'sometimes|string|max:255',
-        'country' => 'sometimes|string|max:255',
-        'postcode' => 'sometimes|string|max:10',
-        'pic_url' => 'sometimes|image|max:2048', // Validate image
-    ]);
-
-    if ($request->hasFile('pic_url')) {
-        // Store the image and get the path
-        $path = $request->file('pic_url')->store('profile_pictures', 'public');
-        $validatedData['pic_url'] = $path;
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+    
+        $validatedData = $request->validate([
+            'fullname' => 'sometimes|string|max:255',
+            'website' => 'sometimes|string|max:255|nullable',
+            'company' => 'sometimes|string|max:255|nullable',
+            'phone' => 'sometimes|string|max:15|nullable',
+            'address' => 'sometimes|string|max:255|nullable',
+            'city' => 'sometimes|string|max:255|nullable',
+            'country' => 'sometimes|string|max:255|nullable',
+            'postcode' => 'sometimes|string|max:10|nullable',
+            'pic_url' => 'sometimes|image|max:2048|nullable', // Validate image
+        ]);
+    
+        if ($request->hasFile('pic_url')) {
+            // Store the image and get the path
+            $path = $request->file('pic_url')->store('profile_pictures', 'public');
+            $validatedData['pic_url'] = $path;
+        }
+    
+        $user->update($validatedData);
+    
+        return response()->json($user, 200);
     }
-
-    $user->update($validatedData);
-
-    return response()->json($user, 200);
-}
+    
 
 
     public function updateEmail(Request $request, $id)
