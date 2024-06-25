@@ -10,7 +10,7 @@
             type="text"
             placeholder="Search Events Name..."
             v-model="searchQuery"
-            @input="dynamicSearch"
+            @keyup="dynamicSearch"
             class="p-4 w-full rounded-l-full border-2 border-yellow-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition duration-300 ease-in-out text-gray-800"
           />
           <button @click="searchEvents" class="p-4 bg-yellow-400 hover:bg-yellow-500 rounded-r-full transition-colors duration-300 ease-in-out">
@@ -112,10 +112,9 @@ export default {
       this.searchTimeout = setTimeout(async () => {
         if (this.searchQuery.length > 2) {
           try {
-            const response = await apiClient.get('/api/events/search', {
-              params: { query: this.searchQuery }
-            });
-            this.filteredEvents = response.data;
+            this.filteredEvents = this.events.filter(event => 
+              event.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+            );
           } catch (error) {
             console.error('Error searching events:', error);
             this.filteredEvents = [];
