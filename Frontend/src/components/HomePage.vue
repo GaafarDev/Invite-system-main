@@ -18,33 +18,25 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </button>
-          <div v-if="searchQuery.length > 2 && filteredEvents.length > 0" 
-     class="suggestions absolute top-full left-0 w-full mt-2 bg-white shadow-xl rounded-md overflow-hidden z-10">
-  <ul class="max-h-60 overflow-y-auto">
-    <li v-for="event in filteredEvents" 
-        :key="event.id" 
-        @click="selectEvent(event)" 
-        class="px-4 py-3 cursor-pointer hover:bg-yellow-100 transition duration-200 border-b border-gray-200 last:border-b-0">
-      <div class="font-semibold text-gray-800">{{ event.title }}</div>
-      <div class="text-sm text-gray-600">{{ event.location }} | {{ formatDate(event.start_datetime) }}</div>
-    </li>
-  </ul>
-</div>
+          <div v-if="searchQuery.length > 2 && filteredEvents.length > 0" class="suggestions absolute top-full left-0 w-full mt-2 bg-white shadow-xl rounded-md overflow-hidden z-10">
+            <ul class="max-h-60 overflow-y-auto">
+              <li v-for="event in filteredEvents" :key="event.id" @click="selectEvent(event)" class="px-4 py-3 cursor-pointer hover:bg-yellow-100 transition duration-200 border-b border-gray-200 last:border-b-0">
+                <div class="font-semibold text-gray-800">{{ event.title }}</div>
+                <div class="text-sm text-gray-600">{{ event.location }} | {{ formatDate(event.start_datetime) }}</div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-    
     <EventCategories class="my-12" />
-    
     <div class="events-page container mx-auto px-4 py-12">
       <h1 class="text-4xl font-bold mb-8 text-center">Discover Events</h1>
       <div class="filters flex flex-wrap justify-center space-x-4 mb-8">
-        <button v-for="filter in ['All', 'Today', 'Tomorrow', 'This Weekend', 'Free']" :key="filter"
-                class="filter-btn py-2 px-6 bg-white shadow-md rounded-full hover:bg-yellow-400 hover:text-white transition-all duration-300 mb-2">
+        <button v-for="filter in ['All', 'Today', 'Tomorrow', 'This Weekend', 'Free']" :key="filter" class="filter-btn py-2 px-6 bg-white shadow-md rounded-full hover:bg-yellow-400 hover:text-white transition-all duration-300 mb-2">
           {{ filter }}
         </button>
       </div>
-
       <div class="upcoming-events mb-16">
         <h2 class="text-3xl font-semibold mb-6">Upcoming Events</h2>
         <div class="event-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -64,34 +56,7 @@
           />
         </div>
         <div class="text-center mt-8">
-          <button v-if="showMoreUpcomingButton" @click="loadMoreUpcoming" 
-                  class="see-more-btn py-3 px-8 bg-yellow-400 hover:bg-yellow-500 rounded-full transition-colors duration-300 ease-in-out shadow-md">
-            See More
-          </button>
-        </div>
-      </div>
-
-      <div class="past-events">
-        <h2 class="text-3xl font-semibold mb-6">Past Events</h2>
-        <div class="event-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <EventCard
-            v-for="event in displayedPastEvents"
-            :key="event.id"
-            @click="goToEventDetails(event)"
-            :eventType="event.category"
-            :eventMonth="getMonth(event.start_datetime)"
-            :eventDays="getDays(event.start_datetime, event.end_datetime)"
-            :eventTitle="event.title"
-            :eventLocation="event.location"
-            :eventTime="getTime(event.start_datetime, event.end_datetime)"
-            :eventPrice="getPrice(event.tickets)"
-            :eventInterested="event.interests.length"
-            class="transform hover:scale-105 transition duration-300 opacity-75"
-          />
-        </div>
-        <div class="text-center mt-8">
-          <button v-if="showMorePastButton" @click="loadMorePast" 
-                  class="see-more-btn py-3 px-8 bg-gray-300 hover:bg-gray-400 rounded-full transition-colors duration-300 ease-in-out shadow-md">
+          <button v-if="showMoreUpcomingButton" @click="loadMoreUpcoming" class="see-more-btn py-3 px-8 bg-yellow-400 hover:bg-yellow-500 rounded-full transition-colors duration-300 ease-in-out shadow-md">
             See More
           </button>
         </div>
@@ -116,9 +81,7 @@ export default {
       searchQuery: '',
       filteredEvents: [],
       displayedUpcomingEvents: [],
-      displayedPastEvents: [],
       upcomingLimit: 6,
-      pastLimit: 6,
       searchTimeout: null,
     };
   },
@@ -126,17 +89,12 @@ export default {
     showMoreUpcomingButton() {
       return this.displayedUpcomingEvents.length < this.upcomingEvents.length;
     },
-    showMorePastButton() {
-      return this.displayedPastEvents.length < this.pastEvents.length;
-    },
     upcomingEvents() {
       const now = new Date();
-      return this.events.filter(event => new Date(event.start_datetime) > now).sort((a, b) => new Date(a.start_datetime) - new Date(b.start_datetime));
+      return this.events
+        .filter(event => new Date(event.start_datetime) > now)
+        .sort((a, b) => new Date(a.start_datetime) - new Date(b.start_datetime));
     },
-    pastEvents() {
-      const now = new Date();
-      return this.events.filter(event => new Date(event.end_datetime) < now).sort((a, b) => new Date(b.start_datetime) - new Date(a.start_datetime));
-    }
   },
   methods: {
     async fetchEvents() {
@@ -144,47 +102,39 @@ export default {
         const response = await apiClient.get('/api/events');
         this.events = response.data;
         this.updateDisplayedUpcomingEvents();
-        this.updateDisplayedPastEvents();
       } catch (error) {
         console.error('Error fetching events:', error);
       }
     },
-    methods: {
-      async dynamicSearch() {
-    clearTimeout(this.searchTimeout);
-    this.searchTimeout = setTimeout(async () => {
-      if (this.searchQuery.length > 2) {
-        try {
-          console.log('Searching for:', this.searchQuery);
-          const response = await apiClient.get('/api/events/search', {
-            params: { query: this.searchQuery }
-          });
-          console.log('Search response:', response.data);
-          this.filteredEvents = response.data;
-          console.log('Filtered events:', this.filteredEvents);
-        } catch (error) {
-          console.error('Error searching events:', error);
+    async dynamicSearch() {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(async () => {
+        if (this.searchQuery.length > 2) {
+          try {
+            const response = await apiClient.get('/api/events/search', {
+              params: { query: this.searchQuery }
+            });
+            this.filteredEvents = response.data;
+          } catch (error) {
+            console.error('Error searching events:', error);
+            this.filteredEvents = [];
+          }
+        } else {
           this.filteredEvents = [];
         }
-      } else {
-        this.filteredEvents = [];
-      }
-    }, 300);
-  }
-}
-,
-selectEvent(event) {
-    this.$router.push({ name: 'ViewEventDetails', params: { eventId: event.id } });
-    this.searchQuery = '';
-    this.filteredEvents = [];
-  },
+      }, 300);
+    },
+    selectEvent(event) {
+      this.$router.push({ name: 'ViewEventDetails', params: { eventId: event.id } });
+      this.searchQuery = '';
+      this.filteredEvents = [];
+    },
     async searchEvents() {
       if (this.searchQuery.length > 2) {
         try {
           const response = await apiClient.get(`/api/events?search=${this.searchQuery}`);
           this.events = response.data;
           this.updateDisplayedUpcomingEvents();
-          this.updateDisplayedPastEvents();
         } catch (error) {
           console.error('Error searching events:', error);
         }
@@ -194,15 +144,8 @@ selectEvent(event) {
       this.upcomingLimit += 6;
       this.updateDisplayedUpcomingEvents();
     },
-    loadMorePast() {
-      this.pastLimit += 6;
-      this.updateDisplayedPastEvents();
-    },
     updateDisplayedUpcomingEvents() {
       this.displayedUpcomingEvents = this.upcomingEvents.slice(0, this.upcomingLimit);
-    },
-    updateDisplayedPastEvents() {
-      this.displayedPastEvents = this.pastEvents.slice(0, this.pastLimit);
     },
     getMonth(datetime) {
       const date = new Date(datetime);
@@ -223,7 +166,8 @@ selectEvent(event) {
     },
     getPrice(tickets) {
       if (tickets.length === 0) return 'Free';
-      return `From $${Math.min(...tickets.map(ticket => ticket.price)).toFixed(2)}`;
+      const prices = tickets.map(ticket => ticket.ticket_price).filter(price => !isNaN(price));
+      return prices.length > 0 ? `From RM ${Math.min(...prices)}` : 'Free';
     },
     goToEventDetails(event) {
       this.$router.push({ name: 'ViewEventDetails', params: { eventId: event.id } });
@@ -250,7 +194,6 @@ selectEvent(event) {
     transform: translate3d(0, 0, 0);
   }
 }
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -261,46 +204,36 @@ selectEvent(event) {
     transform: translate3d(0, 0, 0);
   }
 }
-
 .animate-fade-in-down {
   animation: fadeInDown 1s ease-out;
 }
-
 .animate-fade-in-up {
   animation: fadeInUp 1s ease-out;
 }
-
 .search-bar {
   position: relative;
   z-index: 20;
 }
-
 .search-bar input {
   color: #1a202c;
   font-size: 1rem;
 }
-
 .search-bar input::placeholder {
   color: #a0aec0;
 }
-
 .suggestions {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-
 .suggestions ul {
   scrollbar-width: thin;
   scrollbar-color: #CBD5E0 #EDF2F7;
 }
-
 .suggestions ul::-webkit-scrollbar {
   width: 8px;
 }
-
 .suggestions ul::-webkit-scrollbar-track {
   background: #EDF2F7;
 }
-
 .suggestions ul::-webkit-scrollbar-thumb {
   background-color: #CBD5E0;
   border-radius: 20px;

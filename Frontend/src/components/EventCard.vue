@@ -1,5 +1,5 @@
 <template>
-  <div class="eventCard bg-white rounded-lg overflow-hidden mt-5 shadow-sm hover:shadow-md transition-shadow duration-200 max-w-sm mx-auto">
+  <div class="eventCard bg-white rounded-lg overflow-hidden mt-5 shadow-sm hover:shadow-md transition-shadow duration-200 max-w-m">
     <div class="upperCard relative">
       <div class="eventCardImage" @click="navigateToEventPage">
         <img :src="imageSrc" alt="Event Image" class="w-full h-48 object-cover cursor-pointer" />
@@ -92,7 +92,7 @@ export default {
       type: Number,
       default: 14
     },
-    eventId: { // Ensure eventId is defined only once
+    eventId: {
       type: Number,
       required: true
     }
@@ -193,6 +193,8 @@ export default {
 <style scoped>
 .eventCard {
   transition: box-shadow 0.2s ease-in-out;
+  width: 100%; 
+  
 }
 
 .eventCard:hover {
