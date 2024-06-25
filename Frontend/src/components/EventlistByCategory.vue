@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         fetchEvents() {
-            axios.get('http://127.0.0.1:8000/api/events')
+            axios.get('https://invite-system-backend.up.railway.app/api/events')
                 .then(response => {
                     this.events = response.data;
                     this.filterEventsByCategory();

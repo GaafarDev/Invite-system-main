@@ -89,7 +89,7 @@ export default {
       return date.toLocaleString('en-US', options);
     },
     fetchEventDetails(eventId) {
-      axios.get(`http://127.0.0.1:8000/api/events/${eventId}`)
+      axios.get(`https://invite-system-backend.up.railway.app/api/events/${eventId}`)
         .then(response => {
           this.eventDetails = response.data;
         })
@@ -103,7 +103,7 @@ export default {
         ticket_id: ticketId
         // Additional details as required
       };
-      axios.post(`http://127.0.0.1:8000/api/inviteparticipant`, payload)
+      axios.post(`https://invite-system-backend.up.railway.app/api/inviteparticipant`, payload)
         .then(() => {
           alert("Participant invited successfully!");
         })

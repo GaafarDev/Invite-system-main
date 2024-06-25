@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     fetchEventDetails(eventId) {
-      axios.get(`http://127.0.0.1:8000/api/events/${eventId}`)
+      axios.get(`https://invite-system-backend.up.railway.app/api/events/${eventId}`)
         .then(response => {
           this.eventDetails = response.data;
         })
@@ -99,7 +99,7 @@ export default {
         });
     },
     fetchUsers() {
-      apiClient.get('/api/users')
+      apiClient.get('https://invite-system-backend.up.railway.app/api/users')
         .then(response => {
           this.users = response.data;
         })
@@ -125,7 +125,7 @@ export default {
         event_id: this.eventDetails.id,
         user_id: this.selectedUsers
       };
-      axios.post('http://127.0.0.1:8000/api/invitations', payload)
+      axios.post('https://invite-system-backend.up.railway.app/api/invitations', payload)
         .then(response => {
           console.log("Invitations sent successfully:", response.data);
           this.successMessage = "Invitations sent successfully!";

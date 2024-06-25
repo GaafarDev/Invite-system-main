@@ -142,7 +142,7 @@ export default {
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('id');
       
-      const response = await axios.get(`http://127.0.0.1:8000/api/users/${userId}`, {
+      const response = await axios.get(`https://invite-system-backend.up.railway.app/api/users/${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -168,57 +168,56 @@ export default {
       }
     },
     async saveProfile() {
-  this.isSaving = true;
-  try {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('id');
+      this.isSaving = true;
+      try {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('id');
 
-    // Ensure all fields are properly initialized and formatted
-    const profileData = {
-      fullname: this.profile.fullname || '',
-      website: this.profile.website || '',
-      company: this.profile.company || '',
-      phone: this.profile.phone || '',
-      address: this.profile.address || '',
-      city: this.profile.city || '',
-      country: this.profile.country || '',
-      postcode: this.profile.postcode || '',
-      pic_url: this.profile.pic_url || ''
-    };
+        // Ensure all fields are properly initialized and formatted
+        const profileData = {
+          fullname: this.profile.fullname || '',
+          website: this.profile.website || '',
+          company: this.profile.company || '',
+          phone: this.profile.phone || '',
+          address: this.profile.address || '',
+          city: this.profile.city || '',
+          country: this.profile.country || '',
+          postcode: this.profile.postcode || '',
+          pic_url: this.profile.pic_url || ''
+        };
 
-    console.log('Sending profile data:', profileData);
+        console.log('Sending profile data:', profileData);
 
-    const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, profileData, {
-      headers: {
-        'Authorization': `Bearer ${token}`
+        const response = await axios.put(`https://invite-system-backend.up.railway.app/api/users/${userId}`, profileData, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        console.log('Profile saved:', response.data);
+        this.successMessage = 'Profile saved successfully!';
+        setTimeout(() => (this.successMessage = ''), 3000);
+      } catch (error) {
+        console.error('Error saving profile:', error);
+
+        if (error.response) {
+          console.error('Error response:', error.response.data);
+        }
+
+        this.errorMessage = error.response?.data?.message || 'Error saving profile!';
+        setTimeout(() => (this.errorMessage = ''), 3000);
+      } finally {
+        this.isSaving = false;
       }
-    });
+    },
 
-    console.log('Profile saved:', response.data);
-    this.successMessage = 'Profile saved successfully!';
-    setTimeout(() => (this.successMessage = ''), 3000);
-  } catch (error) {
-    console.error('Error saving profile:', error);
-
-    if (error.response) {
-      console.error('Error response:', error.response.data);
-    }
-
-    this.errorMessage = error.response?.data?.message || 'Error saving profile!';
-    setTimeout(() => (this.errorMessage = ''), 3000);
-  } finally {
-    this.isSaving = false;
-  }
-}
-
-,
     async changeEmail() {
       this.isChangingEmail = true;
       try {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('id');
 
-        const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}/email`, { email: this.newEmail }, {
+        const response = await axios.put(`https://invite-system-backend.up.railway.app/api/users/${userId}/email`, { email: this.newEmail }, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -234,13 +233,14 @@ export default {
         this.isChangingEmail = false;
       }
     },
+
     async changePassword() {
       this.isChangingPassword = true;
       try {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('id');
 
-        const response = await axios.put(`http://127.0.0.1:8000/api/users/${userId}/password`, {
+        const response = await axios.put(`https://invite-system-backend.up.railway.app/api/users/${userId}/password`, {
           password: this.newPassword
         }, {
           headers: {

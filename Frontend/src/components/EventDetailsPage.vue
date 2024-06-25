@@ -102,7 +102,7 @@ export default {
       return date.toLocaleString('en-US', options);
     },
     fetchEventDetails(eventId) {
-      axios.get(`http://127.0.0.1:8000/api/events/${eventId}`)
+      axios.get(`https://invite-system-backend.up.railway.app/api/events/${eventId}`)
         .then(response => {
           this.eventDetails = response.data;
           this.eventDetails.tickets.forEach(ticket => ticket.quantity = 0);
@@ -118,7 +118,7 @@ export default {
       this.showBuyTicketPopout = false;
     },
     buyTicket(payload) {
-      axios.post(`http://127.0.0.1:8000/api/ticketsales`, payload)
+      axios.post(`https://invite-system-backend.up.railway.app/api/ticketsales`, payload)
         .then(() => {
           alert("Ticket purchased successfully!");
           this.closeBuyTicketPopout();
@@ -137,8 +137,8 @@ export default {
 <style scoped>
 .view-event-details-page {
   padding: 100px;
-  padding-right:300px;
-  padding-left:300px;
+  padding-right: 300px;
+  padding-left: 300px;
   margin-left: 5%;
   margin-right: 5%;
 }
@@ -146,7 +146,7 @@ export default {
 .event-details {
   background-color: #f9f9f9;
   padding: 10px;
-  margin-left: 20PX;
+  margin-left: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -160,12 +160,17 @@ export default {
   max-height: 500px;
 }
 
-.details{
+.details {
   padding: 10px;
   margin-left: 40px;
 }
 
-.date-time-section, .location-section, .category-section, .description-section, .tickets-section, .interests-section {
+.date-time-section,
+.location-section,
+.category-section,
+.description-section,
+.tickets-section,
+.interests-section {
   margin-bottom: 20px;
 }
 
@@ -195,10 +200,10 @@ h3 {
   font-weight: bold;
 }
 
-.buy-ticket-button img{
+.buy-ticket-button img {
   height: auto;
   width: 20px;
-  padding-right:5px;
-  padding-top:3px;
+  padding-right: 5px;
+  padding-top: 3px;
 }
 </style>

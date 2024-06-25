@@ -3,8 +3,6 @@
     <div class="container mx-auto px-4 py-12">
       <h1 class="text-4xl font-bold mb-8 text-center">My Organized Events</h1>
       
-  
-
       <div class="upcoming-events mb-16">
         <h2 class="text-3xl font-semibold mb-6">Upcoming Organized Events</h2>
         <div class="event-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -140,9 +138,7 @@ export default {
         return;
       }
 
-      // axios.get(`http://127.0.0.1:8000/api/events/upcoming/${userId}`)
-      axios.get(` http://127.0.0.1:8000/api/users/${userId}/createdevents`)
-     
+      axios.get(`https://invite-system-backend.up.railway.app/api/users/${userId}/createdevents`)
         .then(response => {
           // Log the response from Axios
           console.log('Axios Response:', response);

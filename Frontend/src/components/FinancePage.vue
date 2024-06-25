@@ -105,7 +105,7 @@ export default {
     const fetchEvents = async () => {
       loading.value = true;
       try {
-        const url = `http://127.0.0.1:8000/api/users/${userId.value}/createdevents`;
+        const url = `https://invite-system-backend.up.railway.app/api/users/${userId.value}/createdevents`;
         const response = await fetch(url);
         events.value = await response.json();
         await fetchTicketSales();
@@ -120,7 +120,7 @@ export default {
       for (const event of events.value) {
         for (const ticket of event.tickets) {
           try {
-            const url = `http://127.0.0.1:8000/api/ticketsales/ticket/${ticket.id}`;
+            const url = `https://invite-system-backend.up.railway.app/api/ticketsales/ticket/${ticket.id}`;
             const response = await fetch(url);
             const data = await response.json();
             const totalSales = data.reduce((total, sale) => total + (sale.quantity * ticket.ticket_price), 0);

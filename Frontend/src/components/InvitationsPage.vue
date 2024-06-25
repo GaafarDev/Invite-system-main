@@ -46,7 +46,7 @@ export default {
   async mounted() {
     try {
       const userId = localStorage.getItem('userId') || 3; // Replace with actual user ID logic if needed
-      const response = await apiClient.get(`http://127.0.0.1:8000/api/users/${userId}`);
+      const response = await apiClient.get(`https://invite-system-backend.up.railway.app/api/users/${userId}`);
       this.userId = response.data.id; // Assuming the response contains user ID in `id` field
       this.fetchInvitations();
     } catch (error) {
@@ -60,7 +60,7 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        const response = await apiClient.get(`/api/users/${this.userId}/invitations`);
+        const response = await apiClient.get(`https://invite-system-backend.up.railway.app/api/users/${this.userId}/invitations`);
         console.log('Invitations response:', response.data); // Debugging
         this.invitations = response.data;
         console.log(this.invitations); // Log invitations to check structure
@@ -73,7 +73,7 @@ export default {
     },
     async respondToInvitation(invitationId, response) {
       try {
-        await apiClient.put(`/api/invitations/${invitationId}/respond`, { response });
+        await apiClient.put(`https://invite-system-backend.up.railway.app/api/invitations/${invitationId}/respond`, { response });
         this.showMessage(`Invitation ${response}ed successfully!`);
         this.fetchInvitations();
       } catch (error) {

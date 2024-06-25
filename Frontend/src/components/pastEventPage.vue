@@ -24,7 +24,6 @@
 import axios from 'axios';
 import EventCard from './EventCard.vue';
 
-
 export default {
     components: {
         EventCard,
@@ -77,7 +76,7 @@ export default {
             return `RM ${Math.min(...tickets.map(ticket => ticket.ticket_price))}`;
         },
         fetchEvents() {
-            axios.get('http://127.0.0.1:8000/api/events')
+            axios.get('https://invite-system-backend.up.railway.app/api/events')
                 .then(response => {
                     this.events = response.data;
                     this.updateDisplayedPastEvents();

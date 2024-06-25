@@ -145,7 +145,7 @@ export default {
         return;
       }
 
-      axios.get(`http://127.0.0.1:8000/api/events/upcoming/${userId}`)
+      axios.get(`https://invite-system-backend.up.railway.app/api/events/upcoming/${userId}`)
         .then(response => {
           // Log the response from Axios
           console.log('Axios Response:', response);
