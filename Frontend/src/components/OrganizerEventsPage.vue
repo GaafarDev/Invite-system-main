@@ -3,12 +3,7 @@
     <div class="container mx-auto px-4 py-12">
       <h1 class="text-4xl font-bold mb-8 text-center">My Organized Events</h1>
       
-      <div class="filters flex flex-wrap justify-center space-x-4 mb-8">
-        <button v-for="filter in ['All', 'Today', 'Tomorrow', 'This Weekend', 'Free']" :key="filter"
-                class="filter-btn py-2 px-6 bg-white shadow-md rounded-full hover:bg-yellow-400 hover:text-white transition-all duration-300 mb-2">
-          {{ filter }}
-        </button>
-      </div>
+  
 
       <div class="upcoming-events mb-16">
         <h2 class="text-3xl font-semibold mb-6">Upcoming Organized Events</h2>
@@ -162,17 +157,17 @@ export default {
         });
     },
     goToEventDetails(event) {
-      this.$router.push({
-        name: 'UserEventDetails',
-        params: {
-          eventId: event.id
-        }
-      });
+        this.$router.push({
+          name: 'ViewEventDetails',
+          params: {
+            eventId: event.id
+          }
+        });
+      }
+    },
+    mounted() {
+      this.fetchEvents();
     }
-  },
-  mounted() {
-    this.fetchEvents();
-  }
 };
 </script>
 
