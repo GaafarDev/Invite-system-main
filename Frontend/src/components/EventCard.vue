@@ -119,6 +119,9 @@ export default {
   mounted() {
     if (this.userId) {
       this.checkUserInterest();
+      if (this.checkUserInterest) {
+        this.isInterestedDefault = true;
+    }
     }
   },
   methods: {
@@ -170,9 +173,11 @@ export default {
             this.isInterested = true;
             this.currentIcon = this.clickedIcon;
             this.interestId = interest.id;
+            return true;
           } else {
             this.isInterested = false;
             this.currentIcon = this.defaultIcon;
+            return false;
           }
         })
         .catch(error => {
@@ -185,7 +190,10 @@ export default {
   },
   computed: {
     computedInterested() {
-      return this.isInterested ? this.eventInterested + 1 : this.eventInterested;
+      // if(this.isInterestedDefault){
+      //   return this.isInterested ? this.eventInterested + this.isInterestedDefault: this.eventInterested;
+      // }
+      return this.isInterested ? this.eventInterested + 1  : this.eventInterested;
     }
   }
 };
