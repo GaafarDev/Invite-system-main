@@ -7,21 +7,6 @@
     </div>
     <div class="w-1/2 bg-white flex flex-col items-center justify-center p-10">
       <h2 class="text-2xl font-bold mb-5 w-full text-left text-custom-heading font-montserrat">Create Account</h2>
-      <div class="flex w-full justify-between mb-3">
-        <button class="flex-1 bg-white text-custom-bg border border-gray-300 py-2 rounded-md mr-2 flex items-center justify-center">
-          <img src="../assets/Icons/GoogleIcon.png" alt="Google Logo" class="w-5 h-5 mr-2" />
-          Sign up with Google
-        </button>
-        <button class="flex-1 bg-white text-custom-bg border border-gray-300 py-2 rounded-md flex items-center justify-center">
-          <img src="../assets/Icons/FacebookIcon.png" alt="Facebook Logo" class="w-5 h-5 mr-2" />
-          Sign up with Facebook
-        </button>
-      </div>
-      <div class="flex items-center my-4 w-full">
-        <hr class="flex-grow border-t border-gray-300" />
-        <span class="mx-2 text-gray-500">OR</span>
-        <hr class="flex-grow border-t border-gray-300" />
-      </div>
       <form @submit.prevent="signup" class="w-full">
         <TextField label="Full Name" id="fullName" placeholder="Enter your full name" v-model="fullName" />
         <TextField label="E-mail Address" id="email" placeholder="Enter your email" v-model="email" />

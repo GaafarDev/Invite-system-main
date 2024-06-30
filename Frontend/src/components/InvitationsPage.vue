@@ -45,7 +45,7 @@ export default {
   },
   async mounted() {
     try {
-      const userId = localStorage.getItem('userId') || 3; // Replace with actual user ID logic if needed
+      const userId = localStorage.getItem('id') || 3; // Replace with actual user ID logic if needed
       const response = await apiClient.get(`http://127.0.0.1:8000/api/users/${userId}`);
       this.userId = response.data.id; // Assuming the response contains user ID in `id` field
       this.fetchInvitations();
